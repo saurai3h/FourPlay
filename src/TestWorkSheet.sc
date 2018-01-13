@@ -1,0 +1,1 @@
+val a = Array.fill(7)(0)
