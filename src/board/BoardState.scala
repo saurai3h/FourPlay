@@ -8,11 +8,11 @@ class BoardState {
   private val ROWS = 6
   private val COLUMNS = 7
   private var playerToMove : Player = Player.RED
-  private var board : Array[Array[Cell]] = initializeBoard()
-  private var stackSize : Array[Int] = Array.fill(COLUMNS)(0)
+  private val board : Array[Array[Cell]] = initializeBoard()
+  private val stackSize : Array[Int] = Array.fill(COLUMNS)(0)
 
   def boardFull : Boolean = {
-    stackSize.forall(sz => sz == 6)
+    stackSize.forall(sz => sz == ROWS)
   }
 
   def changeStateAfterMove(moveColumn : Int) : Unit = {
