@@ -1,18 +1,21 @@
 package game
 
 import board.BoardState
-import scala.io.StdIn._
+import validation.InputValidator
 
 object TwoPlayer {
   val boardState = new BoardState
+  val inputValidator = new InputValidator(boardState)
 
   def main(args: Array[String]): Unit = {
-
     boardState.printBoard()
+    simulateGameUntilEnd()
+  }
 
+  def simulateGameUntilEnd() : Unit = {
     while (!boardState.boardFull) {
       println(s"Player ${boardState.getPlayerToMove}'s turn. Enter which column(1 to 7) you want to insert your coin.")
-      val moveMade = readInt()
+      val moveMade = inputValidator.readAndValidateMove()
       boardState.changeStateAfterMove(moveMade)
       boardState.printBoard()
       if(boardState.getWinner.isDefined) {
@@ -22,6 +25,5 @@ object TwoPlayer {
     }
 
     println("Game drawn!")
-
   }
 }

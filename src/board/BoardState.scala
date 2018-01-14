@@ -2,11 +2,10 @@ package board
 
 import board.Cell.Cell
 import board.Player.Player
+import BoardDimensions._
 
 class BoardState {
 
-  private val ROWS = 6
-  private val COLUMNS = 7
   private var playerToMove : Player = Player.RED
   private val board : Array[Array[Cell]] = initializeBoard()
   private val stackSize : Array[Int] = Array.fill(COLUMNS)(0)
@@ -121,10 +120,24 @@ class BoardState {
     board
   }
 
-  private def getCellColorOfPlayerNotToMove: Cell = {
+  def getCellColorOfPlayerToMove: Cell = {
+    if(playerToMove.equals(Player.RED)) Cell.RED
+    else Cell.BLUE
+  }
+
+  def getCellColorOfPlayerNotToMove: Cell = {
     if(playerToMove.equals(Player.RED)) Cell.BLUE
     else Cell.RED
   }
+
+  def isFilledColumn(c : Int) : Boolean = {
+    stackSize(c - 1) == ROWS
+  }
+}
+
+object BoardDimensions {
+  val ROWS = 6
+  val COLUMNS = 7
 }
 
 /**
