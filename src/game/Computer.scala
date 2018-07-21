@@ -1,13 +1,13 @@
 package game
 
-import algorithm.RandomColumn
+import algorithm.AlgoTrait
 import board.BoardState
 
 class Computer {
 
-  val ALGORITHM_TO_RUN = new RandomColumn
+  var algorithmToRun : AlgoTrait = _
 
   def findBestMove(boardState: BoardState) : Int = {
-    ALGORITHM_TO_RUN.solve(boardState)
+    algorithmToRun.solve(boardState)
   }
 }

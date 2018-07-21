@@ -113,7 +113,7 @@ class BoardState {
 
     (1 to ROWS).foreach(rowNumber => {
       (1 to COLUMNS).foreach(colNumber => {
-        board(rowNumber - 1)(colNumber - 1) = Cell.EMPTY
+        board(rowNumber - 1)(colNumber - 1) = Cell.E
       })
     })
 
@@ -153,5 +153,5 @@ object Player extends Enumeration {
   */
 object Cell extends Enumeration {
   type Cell = Value
-  val RED, BLUE, EMPTY = Value
+  val RED, BLUE, E = Value
 }

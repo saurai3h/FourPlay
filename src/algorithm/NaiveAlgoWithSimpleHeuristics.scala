@@ -1,6 +1,7 @@
 package algorithm
 
 import board.BoardState
+import board.BoardDimensions.COLUMNS
 
 /**
   * This algorithm is very naive and makes moves according to very simple rules
@@ -9,12 +10,23 @@ import board.BoardState
   * 3. If there is a move which if made, the human wins right away, DON'T make it.
   * 4. Shallow Heuristic => make the move which connects the most number of AI coins.
   */
-class NaiveAlgoWithSimpleHeuristics extends Solver {
+class NaiveAlgoWithSimpleHeuristics extends AlgoTrait {
 
   override def solve(boardState: BoardState) : Int = {
-    /*
-    TODO : Implement the rules for this class
-     */
-    1
+
+    var changedBoardState = boardState
+
+    /* Rule 1 */
+    (1 to COLUMNS).foreach(col => {
+      changedBoardState.changeStateAfterMove(col)
+      if(changedBoardState.getWinner.isDefined) {
+        return col
+      } else {
+        changedBoardState = boardState
+      }
+    })
+
+    /* Implement other rules*/
+    0
   }
 }

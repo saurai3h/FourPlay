@@ -1,6 +1,7 @@
 package game
 
 import board.BoardState
+import board.BoardDimensions.COLUMNS
 import validation.InputValidator
 
 object SinglePlayer {
@@ -20,6 +21,15 @@ object SinglePlayer {
 
     val humanPlaysFirst = inputValidator.readAndValidateWhoMovesFirst()
 
+    println(
+      """Select Computer's algorithm from the following -
+        |1. RandomColumn (R)
+        |2. NaiveHeuristics (N)
+      """.stripMargin)
+
+    val algoToUse = inputValidator.readAndValidateAlgorithm()
+    computer.algorithmToRun = algoToUse
+
     if(humanPlaysFirst.equals('n')) {
       println("Computer's turn")
       val computerMove = computer.findBestMove(boardState)
@@ -29,7 +39,7 @@ object SinglePlayer {
 
     while (!boardState.boardFull) {
 
-      println(s"Player ${boardState.getPlayerToMove}'s turn. Enter which column(1 to 7) you want to insert your coin.")
+      println(s"Player ${boardState.getPlayerToMove}'s turn. Enter which column(1 to $COLUMNS) you want to insert your coin.")
       val moveMade = inputValidator.readAndValidateMove()
       boardState.changeStateAfterMove(moveMade)
       boardState.printBoard()

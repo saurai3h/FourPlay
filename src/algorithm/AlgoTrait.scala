@@ -2,6 +2,6 @@ package algorithm
 
 import board.BoardState
 
-trait Solver {
+trait AlgoTrait {
   def solve(boardState: BoardState) : Int
 }

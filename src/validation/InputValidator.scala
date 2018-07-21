@@ -1,5 +1,6 @@
 package validation
 
+import algorithm.{AlgoTrait, NaiveAlgoWithSimpleHeuristics, RandomColumn}
 import board.BoardDimensions._
 import board.BoardState
 
@@ -13,25 +14,38 @@ class InputValidator(boardState: BoardState) {
     val input = readLine().toLowerCase
     if(input.nonEmpty && (input.startsWith("y") || input.startsWith("n"))) return input.charAt(0)
 
-    println("Invalid input.")
+    println(invalidationMessage)
     readAndValidateWhoMovesFirst()
+  }
+
+  def readAndValidateAlgorithm(): AlgoTrait = {
+
+    val invalidationMessage = "Please enter only the letters added in parenthesis for the algorithms"
+    val input = readLine().toLowerCase
+
+    if(input.nonEmpty && input.startsWith("r")) return new RandomColumn
+    else if (input.nonEmpty && input.startsWith("n")) return new NaiveAlgoWithSimpleHeuristics
+
+    println(invalidationMessage)
+    readAndValidateAlgorithm()
   }
 
   def readAndValidateMove(): Int = {
 
     try {
       val input = readLine().toInt
-      if(input >= 1 && input <= COLUMNS && !boardState.isFilledColumn(input))return input
+      if(input >= 1 && input <= COLUMNS && !boardState.isFilledColumn(input))
+        input
+      else
+        doWhenInvalidMove()
     } catch {
       case e : NumberFormatException =>
         doWhenInvalidMove()
     }
-
-    doWhenInvalidMove()
   }
 
   def doWhenInvalidMove() : Int = {
-    println("Move input should be an integer between 1 and 7 (inclusive). The corresponding column shouldn't be filled already.")
+    println(s"Move input should be an integer between 1 and $COLUMNS (inclusive). The corresponding column shouldn't be filled already.")
     readAndValidateMove()
   }
 
