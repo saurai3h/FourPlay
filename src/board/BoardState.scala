@@ -4,7 +4,7 @@ import board.Cell.Cell
 import board.Player.Player
 import BoardDimensions._
 
-class BoardState {
+class BoardState extends Cloneable {
 
   private var playerToMove : Player = Player.RED
   private val board : Array[Array[Cell]] = initializeBoard()
@@ -14,8 +14,13 @@ class BoardState {
     stackSize.forall(sz => sz == ROWS)
   }
 
-  def changeStateAfterMove(moveColumn : Int) : Unit = {
+  /* Returns true if the move was legal and changes the state. False otherwise. */
+  def changeStateAfterMove(moveColumn : Int) : Boolean = {
     val rowNumber = ROWS - stackSize(moveColumn - 1)
+
+    /* Illegal move. */
+    if(rowNumber <= 0)
+      return false
 
     if(playerToMove.equals(Player.RED)) {
       board(rowNumber - 1)(moveColumn - 1) = Cell.RED
@@ -26,6 +31,22 @@ class BoardState {
     }
 
     stackSize(moveColumn - 1) = stackSize(moveColumn - 1) + 1
+
+    true
+  }
+
+  /* Given a column number, removes the top coin and updates the board state accordingly. */
+  def undoMove(moveColumn : Int) : Unit = {
+    val rowNumber = ROWS - stackSize(moveColumn - 1)
+
+    if(playerToMove.equals(Player.RED)) {
+      playerToMove =  Player.BLUE
+    } else {
+      playerToMove = Player.RED
+    }
+
+    board(rowNumber)(moveColumn - 1) = Cell.E
+    stackSize(moveColumn - 1) = stackSize(moveColumn - 1) - 1
   }
 
   /**
