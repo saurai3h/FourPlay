@@ -33,6 +33,7 @@ object SinglePlayer {
     if(humanPlaysFirst.equals('n')) {
       println("Computer's turn")
       val computerMove = computer.findBestMove(boardState)
+      println(s"Computer chose $computerMove")
       boardState.changeStateAfterMove(computerMove)
       boardState.printBoard()
     }
@@ -51,6 +52,7 @@ object SinglePlayer {
 
       println("Computer's turn.")
       val computerMove = computer.findBestMove(boardState)
+      println(s"Computer chose $computerMove")
       boardState.changeStateAfterMove(computerMove)
       boardState.printBoard()
 

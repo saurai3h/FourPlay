@@ -107,6 +107,12 @@ class BoardState extends Cloneable {
   }
 
   def printBoard() : Unit = {
+
+    (1 to COLUMNS).foreach(c => print(f"$c%6s"))
+    println()
+    println()
+    println()
+
     (1 to ROWS).foreach(rowNumber => {
       (1 to COLUMNS).foreach(colNumber => {
         print(f"${board(rowNumber - 1)(colNumber - 1)}%6s")

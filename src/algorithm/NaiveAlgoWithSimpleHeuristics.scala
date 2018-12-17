@@ -31,19 +31,26 @@ class NaiveAlgoWithSimpleHeuristics extends AlgoTrait {
     /* Rule 2 and 3 */
     val badMoves = new scala.collection.mutable.HashSet[Int]
     (1 to COLUMNS).foreach(col => {
-      val didMove = boardState.changeStateAfterMove(col)
-      (1 to COLUMNS).foreach(humanCol => {
 
-        val didMoveHuman = boardState.changeStateAfterMove(humanCol)
-        if(boardState.getWinner.isDefined) {
-          // `col` move was bad. Human wins after some `humanCol` move.
-          badMoves += col
-        }
-        if(didMoveHuman)
-          boardState.undoMove(humanCol)
-      })
-      if(didMove)
+      val didMove = boardState.changeStateAfterMove(col)
+
+      if(didMove) {
+
+        (1 to COLUMNS).foreach(humanCol => {
+
+            val didMoveHuman = boardState.changeStateAfterMove(humanCol)
+            if (boardState.getWinner.isDefined) {
+              // `col` move was bad. Human wins after some `humanCol` move.
+              badMoves += col
+            }
+            if (didMoveHuman)
+              boardState.undoMove(humanCol)
+        })
+
         boardState.undoMove(col)
+      } else {
+        badMoves += col
+      }
     })
 
     if(badMoves.size < COLUMNS) {
