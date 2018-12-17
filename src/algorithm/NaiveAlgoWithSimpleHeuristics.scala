@@ -2,6 +2,7 @@ package algorithm
 
 import board.BoardState
 import board.BoardDimensions.COLUMNS
+import scala.util.Random
 
 /**
   * This algorithm is very naive and makes moves according to very simple rules
@@ -48,10 +49,10 @@ class NaiveAlgoWithSimpleHeuristics extends AlgoTrait {
     if(badMoves.size < COLUMNS) {
       val goodMoves = (1 to COLUMNS).filterNot(col => badMoves.contains(col))
       /* TODO : Implement Rule 4 */
-      goodMoves.apply(0)
+      goodMoves.apply(Random.nextInt(goodMoves.size))
     } else {
       /* Anyway lost, make a random move */
-      1 + scala.util.Random.nextInt(COLUMNS - 1)
+      1 + Random.nextInt(COLUMNS - 1)
     }
   }
 }
